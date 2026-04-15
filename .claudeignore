@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.git/
+public/
+*.lock
+*.log
+dist/
+.vercel/
+coverage/
+*.map
+*.d.ts
