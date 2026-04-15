@@ -67,8 +67,8 @@ export default function MapContainer() {
       center={mapSettings.center}
       zoom={mapSettings.zoom}
       style={{ width: '100%', height: '100%' }}
-      zoomControl
-      attributionControl
+      zoomControl={false}
+      attributionControl={false}
     >
       <TileLayerManager />
       <TraceLayer />
