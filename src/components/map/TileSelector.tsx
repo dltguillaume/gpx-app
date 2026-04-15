@@ -1,7 +1,8 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { TILE_LAYERS, OVERLAY_LAYERS, type TileLayerConfig, type TileLayerGroup } from '@/lib/tileLayers'
-import { getApiKeys } from '@/lib/apiKeys'
+import { getApiKeys, type ApiKeys } from '@/lib/apiKeys'
 import { useTracksStore } from '@/store/tracks'
 
 const GROUP_ORDER: TileLayerGroup[] = ['Monde', 'IGN France', 'Swisstopo', 'Thunderforest']
@@ -55,8 +56,15 @@ export default function TileSelector() {
   const toggleOverlay = useTracksStore((s) => s.toggleOverlay)
   const setOverlayOpacity = useTracksStore((s) => s.setOverlayOpacity)
 
-  const keys = getApiKeys()
-  const hasKey = (provider: 'ign' | 'thunderforest') => !!keys[provider]
+  const [mounted, setMounted] = useState(false)
+  const [apiKeys, setApiKeys] = useState<ApiKeys>({})
+
+  useEffect(() => {
+    setApiKeys(getApiKeys())
+    setMounted(true)
+  }, [])
+
+  const hasKey = (provider: 'ign' | 'thunderforest') => mounted && !!apiKeys[provider]
 
   const baseGroups = groupBy(TILE_LAYERS)
   const overlayGroups = groupBy(OVERLAY_LAYERS)

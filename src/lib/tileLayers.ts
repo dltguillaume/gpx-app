@@ -71,7 +71,7 @@ export const TILE_LAYERS: TileLayerConfig[] = [
   {
     id: 'ign-scan100',
     name: 'IGN SCAN100',
-    url: 'https://data.geopf.fr/private/wmts?SERVICE=WMTS&VERSION=1.0.0&apikey={KEY}&layer=SCAN100_PYR-JPEG_WLD_WM&style=normal&tilematrixset=PM&Request=GetTile&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}',
+    url: 'https://data.geopf.fr/private/wmts?apikey={KEY}&LAYER=SCAN100_PYR-JPEG_WLD_WM_WMTS_3D&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
     attribution: '© IGN Géoportail',
     group: 'IGN France',
     requiresKey: 'ign',
