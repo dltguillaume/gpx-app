@@ -1,0 +1,77 @@
+'use client'
+
+import { useEffect } from 'react'
+import { MapContainer as LeafletMap, useMap, useMapEvents } from 'react-leaflet'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+import { useTracksStore } from '@/store/tracks'
+import TileLayerManager from './TileLayerManager'
+import TraceLayer from './TraceLayer'
+
+// Corrige l'icône par défaut de Leaflet avec les bundlers
+function fixLeafletIcons() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  delete (L.Icon.Default.prototype as any)._getIconUrl
+  L.Icon.Default.mergeOptions({
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+  })
+}
+
+function MapFitBounds() {
+  const map = useMap()
+  const pendingFitBoundsId = useTracksStore((s) => s.pendingFitBoundsId)
+  const clearPendingFitBounds = useTracksStore((s) => s.clearPendingFitBounds)
+  const tracks = useTracksStore((s) => s.tracks)
+
+  useEffect(() => {
+    if (!pendingFitBoundsId) return
+    const track = tracks.find((t) => t.id === pendingFitBoundsId)
+    if (!track || track.points.length === 0) return
+
+    const latLngs = track.points.map((p) => L.latLng(p.lat, p.lng))
+    const bounds = L.latLngBounds(latLngs)
+    map.fitBounds(bounds, { padding: [40, 40], maxZoom: 16, animate: true })
+    clearPendingFitBounds()
+  }, [pendingFitBoundsId, tracks, map, clearPendingFitBounds])
+
+  return null
+}
+
+function MapEventHandler() {
+  const setMapSettings = useTracksStore((s) => s.setMapSettings)
+
+  useMapEvents({
+    moveend: (e) => {
+      const map = e.target as L.Map
+      const c = map.getCenter()
+      setMapSettings({ center: [c.lat, c.lng], zoom: map.getZoom() })
+    },
+  })
+
+  return null
+}
+
+export default function MapContainer() {
+  const { mapSettings } = useTracksStore()
+
+  useEffect(() => {
+    fixLeafletIcons()
+  }, [])
+
+  return (
+    <LeafletMap
+      center={mapSettings.center}
+      zoom={mapSettings.zoom}
+      style={{ width: '100%', height: '100%' }}
+      zoomControl
+      attributionControl
+    >
+      <TileLayerManager />
+      <TraceLayer />
+      <MapFitBounds />
+      <MapEventHandler />
+    </LeafletMap>
+  )
+}
