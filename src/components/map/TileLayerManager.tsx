@@ -12,17 +12,18 @@ export default function TileLayerManager() {
 
   const keys = getApiKeys()
 
-  const activeTile =
-    getTileLayerById(activeTileLayerId) ?? TILE_LAYERS.find((l) => l.id === 'osm')!
+  const activeTile = getTileLayerById(activeTileLayerId) ?? TILE_LAYERS[0]
 
   return (
     <>
-      <TileLayer
-        key={activeTile.id}
-        url={resolveUrl(activeTile, keys)}
-        attribution={activeTile.attribution}
-        maxZoom={activeTile.maxZoom ?? 19}
-      />
+      {activeTile && (
+        <TileLayer
+          key={activeTile.id}
+          url={activeTile ? resolveUrl(activeTile, keys) : ''}
+          attribution={activeTile.attribution}
+          maxZoom={activeTile.maxZoom ?? 19}
+        />
+      )}
       {activeOverlayIds.map((id) => {
         const layer = OVERLAY_LAYERS.find((l) => l.id === id)
         if (!layer) return null

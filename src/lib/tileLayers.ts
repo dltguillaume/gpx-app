@@ -15,33 +15,18 @@ export interface TileLayerConfig {
 }
 
 export const TILE_LAYERS: TileLayerConfig[] = [
-  // ── Monde ──────────────────────────────────────────────────────────────────
+  // ── Thunderforest ──────────────────────────────────────────────────────────
   {
-    id: 'osm',
-    name: 'OSM Standard',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '© OpenStreetMap contributors',
-    group: 'Monde',
-    maxZoom: 19,
-  },
-  {
-    id: 'refuge',
-    name: 'Refuge Info',
-    url: 'https://maps.refuges.info/hiking/{z}/{x}/{y}.png',
-    attribution: '© maps.refuges.info, © OSM contributors',
-    group: 'Monde',
-    maxZoom: 17,
+    id: 'tf-locus',
+    name: 'Open Maps',
+    url: 'https://tile.thunderforest.com/locus-4za/{z}/{x}/{y}.png?apikey={KEY}',
+    attribution: '© Thunderforest, © OSM contributors',
+    group: 'Thunderforest',
+    requiresKey: 'thunderforest',
+    maxZoom: 22,
   },
 
   // ── IGN France ─────────────────────────────────────────────────────────────
-  {
-    id: 'ign-plan',
-    name: 'Plan IGN',
-    url: 'https://data.geopf.fr/wmts?Service=WMTS&Request=GetTile&Version=1.0.0&Layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&Style=normal&Format=image/png&TileMatrixSet=PM&TileMatrix={z}&TileRow={y}&TileCol={x}',
-    attribution: '© IGN Géoportail',
-    group: 'IGN France',
-    maxZoom: 18,
-  },
   {
     id: 'ign-satellite',
     name: 'IGN Satellite',
@@ -67,15 +52,6 @@ export const TILE_LAYERS: TileLayerConfig[] = [
     group: 'IGN France',
     requiresKey: 'ign',
     maxZoom: 16,
-  },
-  {
-    id: 'ign-scan100',
-    name: 'IGN SCAN100',
-    url: 'https://data.geopf.fr/private/wmts?apikey={KEY}&LAYER=SCAN100_PYR-JPEG_WLD_WM_WMTS_3D&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
-    attribution: '© IGN Géoportail',
-    group: 'IGN France',
-    requiresKey: 'ign',
-    maxZoom: 14,
   },
   {
     id: 'ign-littoral',
@@ -112,25 +88,6 @@ export const TILE_LAYERS: TileLayerConfig[] = [
     maxZoom: 17,
   },
 
-  // ── Thunderforest ──────────────────────────────────────────────────────────
-  {
-    id: 'tf-outdoors',
-    name: 'TF Outdoors',
-    url: 'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey={KEY}',
-    attribution: '© Thunderforest, © OSM contributors',
-    group: 'Thunderforest',
-    requiresKey: 'thunderforest',
-    maxZoom: 22,
-  },
-  {
-    id: 'tf-locus',
-    name: 'TF Locus',
-    url: 'https://tile.thunderforest.com/locus-4za/{z}/{x}/{y}.png?apikey={KEY}',
-    attribution: '© Thunderforest, © OSM contributors',
-    group: 'Thunderforest',
-    requiresKey: 'thunderforest',
-    maxZoom: 22,
-  },
 ]
 
 export const OVERLAY_LAYERS: TileLayerConfig[] = [
@@ -210,17 +167,6 @@ export const OVERLAY_LAYERS: TileLayerConfig[] = [
     defaultOpacity: 0.5,
   },
 
-  // ── Monde ──────────────────────────────────────────────────────────────────
-  {
-    id: 'courbes-niveau',
-    name: 'Courbes de niveau',
-    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-    attribution: '© OpenTopoMap, © OSM contributors',
-    group: 'Monde',
-    isOverlay: true,
-    defaultOpacity: 0.5,
-    maxZoom: 17,
-  },
 ]
 
 /** Remplace {KEY} dans l'URL par la clé appropriée. */

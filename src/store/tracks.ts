@@ -32,7 +32,7 @@ interface TracksState {
 const DEFAULT_MAP_SETTINGS: MapSettings = {
   center: DEFAULT_MAP_CENTER,
   zoom: DEFAULT_MAP_ZOOM,
-  activeTileLayerId: 'osm',
+  activeTileLayerId: 'tf-locus',
   activeOverlayIds: [],
   overlayOpacities: {},
 }
@@ -138,7 +138,7 @@ export const useTracksStore = create<TracksState>()(
             mapSettings: {
               center: old.mapSettings?.center ?? DEFAULT_MAP_CENTER,
               zoom: old.mapSettings?.zoom ?? DEFAULT_MAP_ZOOM,
-              activeTileLayerId: 'osm',
+              activeTileLayerId: 'tf-locus',
               activeOverlayIds: [],
               overlayOpacities: {},
             },
