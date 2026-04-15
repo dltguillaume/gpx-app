@@ -48,42 +48,37 @@ export default function GeolocationButton() {
   }
 
   return (
-    <div
-      className="absolute bottom-[66px] left-6 z-[1000]"
-      style={{ pointerEvents: 'none' }}
-    >
-      <div className="relative">
-        <button
-          onClick={handleLocate}
-          disabled={!supported}
-          className={`flex items-center justify-center w-[34px] h-[34px] bg-white border border-gray-300 shadow-md transition-colors ${
-            !supported ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-50'
-          }`}
-          style={{ pointerEvents: 'auto', borderRadius: 4 }}
-          title={supported ? 'Ma position' : 'Géolocalisation non disponible'}
+    <div className="relative">
+      <button
+        onClick={handleLocate}
+        disabled={!supported}
+        className={`flex items-center justify-center w-[34px] h-[34px] bg-white border border-gray-300 shadow-md transition-colors ${
+          !supported ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-50'
+        }`}
+        style={{ borderRadius: 4 }}
+        title={supported ? 'Ma position' : 'Géolocalisation non disponible'}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={loading ? 'animate-spin' : ''}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className={loading ? 'animate-spin' : ''}
-          >
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-            <circle cx="12" cy="12" r="8"/>
-          </svg>
-        </button>
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          <circle cx="12" cy="12" r="8"/>
+        </svg>
+      </button>
 
-        {error && (
-          <div className="absolute left-[42px] top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-800 text-white text-xs px-2 py-1 rounded pointer-events-none">
-            Localisation non disponible
-          </div>
-        )}
-      </div>
+      {error && (
+        <div className="absolute left-[42px] top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-800 text-white text-xs px-2 py-1 rounded pointer-events-none">
+          Localisation non disponible
+        </div>
+      )}
     </div>
   )
 }

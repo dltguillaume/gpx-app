@@ -3,7 +3,6 @@
 import dynamic from 'next/dynamic'
 import Sidebar from '@/components/sidebar/Sidebar'
 import FileDropZone from '@/components/dropzone/FileDropZone'
-import TileLayerControl from '@/components/map/TileLayerControl'
 
 const MapContainer = dynamic(() => import('@/components/map/MapContainer'), {
   ssr: false,
@@ -18,7 +17,6 @@ export default function Home() {
         <FileDropZone>
           <MapContainer />
         </FileDropZone>
-        <TileLayerControl />
       </div>
     </div>
   )

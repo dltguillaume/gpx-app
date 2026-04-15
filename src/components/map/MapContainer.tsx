@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { MapContainer as LeafletMap, useMap, useMapEvents } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -9,6 +9,8 @@ import TileLayerManager from './TileLayerManager'
 import TraceLayer from './TraceLayer'
 import SearchBar from './SearchBar'
 import GeolocationButton from './GeolocationButton'
+import MeasureTool from './MeasureTool'
+import TileLayerControl from './TileLayerControl'
 
 // Corrige l'icône par défaut de Leaflet avec les bundlers
 function fixLeafletIcons() {
@@ -55,6 +57,25 @@ function MapEventHandler() {
   return null
 }
 
+function ControlsContainer() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      L.DomEvent.disableClickPropagation(containerRef.current)
+      L.DomEvent.disableScrollPropagation(containerRef.current)
+    }
+  }, [])
+
+  return (
+    <div ref={containerRef} className="absolute bottom-6 left-3 z-[1000] flex flex-col gap-2">
+      <TileLayerControl />
+      <MeasureTool />
+      <GeolocationButton />
+    </div>
+  )
+}
+
 export default function MapContainer() {
   const { mapSettings } = useTracksStore()
 
@@ -75,7 +96,7 @@ export default function MapContainer() {
       <MapFitBounds />
       <MapEventHandler />
       <SearchBar />
-      <GeolocationButton />
+      <ControlsContainer />
     </LeafletMap>
   )
 }

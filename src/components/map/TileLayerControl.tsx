@@ -33,13 +33,12 @@ export default function TileLayerControl() {
   }
 
   return (
-    <div className="absolute bottom-6 left-6 z-[1000]" style={{ pointerEvents: 'none' }}>
-      <div
-        onMouseEnter={handleEnter}
-        onMouseLeave={handleLeave}
-        className="flex items-end"
-        style={{ pointerEvents: 'auto' }}
-      >
+    <div
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      className="flex items-end"
+      style={{ pointerEvents: 'auto' }}
+    >
         <button
           onClick={handleClick}
           className="flex items-center justify-center w-[34px] h-[34px] bg-white border border-gray-300 shadow-md text-gray-600 hover:bg-gray-50 transition-colors shrink-0"
@@ -61,7 +60,6 @@ export default function TileLayerControl() {
             <TileSelector />
           </div>
         )}
-      </div>
     </div>
   )
 }
