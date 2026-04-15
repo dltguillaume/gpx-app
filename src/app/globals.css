@@ -22,3 +22,18 @@ body {
   color: var(--foreground);
   font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
+
+.geoloc-pulse {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  animation: geoloc-ping 1.5s ease-out infinite;
+}
+
+@keyframes geoloc-ping {
+  0%   { box-shadow: 0 0 0 0   rgba(59, 130, 246, 0.7); }
+  70%  { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(59, 130, 246, 0); }
+}

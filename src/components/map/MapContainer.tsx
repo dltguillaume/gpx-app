@@ -7,6 +7,8 @@ import 'leaflet/dist/leaflet.css'
 import { useTracksStore } from '@/store/tracks'
 import TileLayerManager from './TileLayerManager'
 import TraceLayer from './TraceLayer'
+import SearchBar from './SearchBar'
+import GeolocationButton from './GeolocationButton'
 
 // Corrige l'icône par défaut de Leaflet avec les bundlers
 function fixLeafletIcons() {
@@ -72,6 +74,8 @@ export default function MapContainer() {
       <TraceLayer />
       <MapFitBounds />
       <MapEventHandler />
+      <SearchBar />
+      <GeolocationButton />
     </LeafletMap>
   )
 }

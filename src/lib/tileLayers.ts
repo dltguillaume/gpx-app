@@ -12,6 +12,7 @@ export interface TileLayerConfig {
   requiresKey?: 'ign' | 'thunderforest'
   isOverlay?: boolean
   defaultOpacity?: number
+  blendMode?: 'multiply' | 'normal'
 }
 
 export const TILE_LAYERS: TileLayerConfig[] = [
@@ -100,6 +101,7 @@ export const OVERLAY_LAYERS: TileLayerConfig[] = [
     group: 'IGN France',
     isOverlay: true,
     defaultOpacity: 0.5,
+    blendMode: 'multiply',
   },
   {
     id: 'ign-ski',
@@ -129,6 +131,7 @@ export const OVERLAY_LAYERS: TileLayerConfig[] = [
     group: 'Swisstopo',
     isOverlay: true,
     defaultOpacity: 0.6,
+    blendMode: 'multiply',
   },
   {
     id: 'swiss-ski',
