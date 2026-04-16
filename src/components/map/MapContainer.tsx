@@ -11,6 +11,9 @@ import SearchBar from './SearchBar'
 import GeolocationButton from './GeolocationButton'
 import MeasureTool from './MeasureTool'
 import TileLayerControl from './TileLayerControl'
+import DrawingController from '@/components/editor/DrawingController'
+import EditorToolbar from '@/components/editor/EditorToolbar'
+import NewTraceButton from '@/components/editor/NewTraceButton'
 
 // Corrige l'icône par défaut de Leaflet avec les bundlers
 function fixLeafletIcons() {
@@ -59,6 +62,7 @@ function MapEventHandler() {
 
 function ControlsContainer() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const editorState = useTracksStore((s) => s.editorState)
 
   useEffect(() => {
     if (containerRef.current) {
@@ -69,6 +73,8 @@ function ControlsContainer() {
 
   return (
     <div ref={containerRef} className="absolute bottom-6 left-3 z-[1000] flex flex-col gap-2">
+      {editorState.isActive && <EditorToolbar />}
+      <NewTraceButton />
       <TileLayerControl />
       <MeasureTool />
       <GeolocationButton />
@@ -95,6 +101,7 @@ export default function MapContainer() {
       <TraceLayer />
       <MapFitBounds />
       <MapEventHandler />
+      <DrawingController />
       <SearchBar />
       <ControlsContainer />
     </LeafletMap>

@@ -3,6 +3,7 @@
 import type { Track } from '@/types'
 import { useTracksStore } from '@/store/tracks'
 import { formatDistance, formatElevation, formatDuration } from '@/lib/utils'
+import { exportGpxFile } from '@/lib/exporters/gpx'
 
 interface Props {
   track: Track
@@ -13,6 +14,8 @@ export default function TrackItem({ track }: Props) {
   const setActiveTrack = useTracksStore((s) => s.setActiveTrack)
   const updateTrack = useTracksStore((s) => s.updateTrack)
   const removeTrack = useTracksStore((s) => s.removeTrack)
+  const startEditing = useTracksStore((s) => s.startEditing)
+  const editorState = useTracksStore((s) => s.editorState)
 
   const isActive = track.id === activeTrackId
 
@@ -63,10 +66,43 @@ export default function TrackItem({ track }: Props) {
         <button
           onClick={(e) => {
             e.stopPropagation()
+            startEditing(track.id)
+            // Show warning if track has time/cardio data
+            const hasTimeData = track.points.some((p) => p.time !== undefined)
+            const hasCardioData = track.points.some((p) => p.hr !== undefined || p.cadence !== undefined)
+            if ((hasTimeData || hasCardioData) && !sessionStorage.getItem(`edited-${track.id}`)) {
+              // Warning will be handled by DrawingController
+              sessionStorage.setItem(`edited-${track.id}`, 'true')
+            }
+          }}
+          className={`transition-colors ${editorState.isActive ? 'text-gray-200 cursor-not-allowed' : 'text-gray-400 hover:text-green-500'}`}
+          title={editorState.isActive ? 'Un tracé est en édition' : 'Éditer'}
+          disabled={editorState.isActive}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            exportGpxFile(track)
+          }}
+          className="text-gray-400 hover:text-blue-500 transition-colors"
+          title="Exporter GPX"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
             removeTrack(track.id)
           }}
-          className="text-gray-400 hover:text-red-500 transition-colors"
-          title="Supprimer"
+          className={`transition-colors ${editorState.isActive ? 'text-gray-200 cursor-not-allowed' : 'text-gray-400 hover:text-red-500'}`}
+          title={editorState.isActive ? 'Un tracé est en édition' : 'Supprimer'}
+          disabled={editorState.isActive}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
